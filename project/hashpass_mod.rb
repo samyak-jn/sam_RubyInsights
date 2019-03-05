@@ -1,12 +1,14 @@
 #we can do it by mixin that module in the class
   require 'bcrypt'
-          def create_hash_digest(password)
+          module hash_pass
+          puts "hash_pass module activated."
+          def hash_pass.create_hash_digest(password)
                   BCrypt::Password.create(password)
           end
-          def verify_hash_digest(password)
+          def hash_pass.verify_hash_digest(password)
                   BCrypt::Password.new(password)
           end
-          def create_secure_users(list_of_users)
+          def hash_pass.create_secure_users(list_of_users)
                   list_of_users.each do |user_record|
           user_record[:password] = create_hash_digest(user_record[:password])
           end
@@ -14,7 +16,7 @@
           end
                                                                            
                                                                         
-  def auth_user(username, password, list_users)
+  def hash_pass.auth_user(username, password, list_users)
     list_users.each do |user_name|
       if user_name[:username] == username && user_name[:password] == password
       return user_name
